@@ -14,7 +14,6 @@ public class Specs {
     public static RequestSpecification request = with()
             .filter(allureWithCustomTemplates())
             .baseUri("https://demowebshop.tricentis.com/")
-            //.basePath("/api")
             .log().all()
             .contentType(ContentType.JSON);
 
@@ -25,10 +24,6 @@ public class Specs {
             .expectStatusCode(200)
             .build();
 
-    public static ResponseSpecification response204 = new ResponseSpecBuilder()
-            .log(STATUS)
-            .expectStatusCode(204)
-            .build();
 
     public static ResponseSpecification response302 = new ResponseSpecBuilder()
             .log(STATUS)
