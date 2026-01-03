@@ -13,7 +13,7 @@ public interface WebDriverConfig extends Config {
     String browser();
 
     @Key("browserVersion")
-    @DefaultValue("143.0")
+    @DefaultValue("128.0")
     String browserVersion();
 
     @Key("browserResolution")
