@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.text;
-import static demowebshop.TestData.DEFAULT_USER;
+import static demowebshop.UserData.DEFAULT_USER;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
