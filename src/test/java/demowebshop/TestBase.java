@@ -41,7 +41,10 @@ public class TestBase {
         ));
         Configuration.browserCapabilities = capabilities;
 
-
+        System.out.println("System property EMAIL=" + System.getProperty("defaultUserEmail"));
+        System.out.println("System property PASSWORD=" + System.getProperty("defaultUserPassword"));
+        System.out.println("Owner EMAIL=" + config.defaultUserEmail());
+        System.out.println("Owner PASSWORD=" + config.defaultUserPassword());
     }
 
     @BeforeEach

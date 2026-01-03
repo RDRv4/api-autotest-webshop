@@ -28,8 +28,10 @@ public interface WebDriverConfig extends Config {
     String baseUrl();
 
     @Key("defaultUserEmail")
+    @DefaultValue("d.rudovich@gmial.com")
     String defaultUserEmail();
 
     @Key("defaultUserPassword")
+    @DefaultValue("ROJneTpDbmkVwIg")
     String defaultUserPassword();
 }
