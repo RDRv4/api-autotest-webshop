@@ -36,8 +36,16 @@ dependencies {
     testImplementation("io.qameta.allure:allure-selenide:2.32.0")
     testImplementation("io.qameta.allure:allure-junit5:2.32.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.20.0")
+
+    implementation("org.slf4j:slf4j-simple:2.0.17")
+    implementation("org.aeonbits.owner:owner:1.0.12")
 }
 
 tasks.test {
     useJUnitPlatform()
+    systemProperties(System.getProperties())
+    testLogging {
+        events "started", "skipped", "failed", "standard_error", "standard_out"
+        exceptionFormat "short"
+    }
 }
