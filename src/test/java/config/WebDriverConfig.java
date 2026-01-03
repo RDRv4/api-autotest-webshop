@@ -27,9 +27,9 @@ public interface WebDriverConfig extends Config {
     @DefaultValue("https://demowebshop.tricentis.com")
     String baseUrl();
 
-    @Key("defaultUser.email")
+    @Key("defaultUserEmail")
     String defaultUserEmail();
 
-    @Key("defaultUser.password")
+    @Key("defaultUserPassword")
     String defaultUserPassword();
 }
