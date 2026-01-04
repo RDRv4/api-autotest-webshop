@@ -7,7 +7,6 @@
 - [Running Tests](#computer-running-tests-from-terminal)
 - [Running Tests in Jenkins](#running-tests-in-jenkins)
 - [Allure Report](#allure-report)
-- [Telegram Notifications](#telegram-notifications)
 
 ## :gear: Technologies and Tools
 
@@ -27,7 +26,7 @@ This project contains automated tests written in **Java** using **Selenide** for
 testing.
 
 **JUnit5** is used as the test framework, **Gradle** for build management, and **Allure** for reporting.  
-Tests can be executed locally or remotely (e.g. via Selenoid).
+Tests can be executed locally or remotely (by Selenoid).
 
 ## :heavy_check_mark: Test Cases
 
@@ -80,3 +79,5 @@ To start a build, go to <code><strong>Build with Parameters</strong></code> and 
 <p align="center">
   <img src="media/screen/jenkins_behaviors.png" alt="allure-report_1" width="900">
 </p>
+
+:arrow_up:[Back to top](#project-automated-testing-of-online-store-demo-web-shop)
