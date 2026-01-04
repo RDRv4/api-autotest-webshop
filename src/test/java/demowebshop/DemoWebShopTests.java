@@ -1,8 +1,12 @@
 package demowebshop;
 
+import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import models.UserGenerator;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -21,6 +25,9 @@ public class DemoWebShopTests extends TestBase {
 
     @Test
     @Owner("d.rudovich")
+    @Feature("Authentication")
+    @Story("Successful login")
+    @Tags({@Tag("ui"), @Tag("auth")})
     @DisplayName("Successful Login")
     void loginWithValidCredentials() {
         String cookie = getAuthCookie(DEFAULT_USER);
@@ -34,6 +41,9 @@ public class DemoWebShopTests extends TestBase {
 
     @ParameterizedTest(name = "Login with email={0}, password={1}")
     @Owner("d.rudovich")
+    @Feature("Authentication")
+    @Story("Unsuccessful login (parameterized)")
+    @Tags({@Tag("api"), @Tag("auth")})
     @DisplayName("Unsuccessful Login")
     @CsvSource({
             "'', 'ROJneTpDbmkVwIg'",          // empty login
@@ -59,6 +69,9 @@ public class DemoWebShopTests extends TestBase {
 
     @Test
     @Owner("d.rudovich")
+    @Feature("Shopping Cart")
+    @Story("Add product and check quantity")
+    @Tags({@Tag("ui"), @Tag("cart")})
     @DisplayName("Checking Quantity after adding to Cart")
     void addProductAndCheckQuantityInTheCart() {
 
@@ -95,6 +108,9 @@ public class DemoWebShopTests extends TestBase {
 
     @Test
     @Owner("d.rudovich")
+    @Feature("Shopping Cart")
+    @Story("Add product and check price")
+    @Tags({@Tag("ui"), @Tag("cart")})
     @DisplayName("Checking Product price after adding to Cart")
     void addProductAndCheckPriceInTheCart() {
 
