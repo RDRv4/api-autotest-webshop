@@ -68,9 +68,9 @@ public class TestBase {
         }
         return cookie;
     }
-
-    protected void setAuthCookie(String cookie) {
-        WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("NOPCOMMERCE.AUTH", cookie));
-        refresh();
-    }
+//
+//    protected void setAuthCookie(String cookie) {
+//        WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("NOPCOMMERCE.AUTH", cookie));
+//        refresh();
+//    }
 }

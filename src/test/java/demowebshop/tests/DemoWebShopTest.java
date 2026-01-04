@@ -1,5 +1,7 @@
-package demowebshop;
+package demowebshop.tests;
 
+import demowebshop.TestBase;
+import demowebshop.pages.DemoWebShopPage;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
@@ -21,7 +23,9 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static specs.Specs.*;
 
-public class DemoWebShopTests extends TestBase {
+public class DemoWebShopTest extends TestBase {
+
+    DemoWebShopPage demoWebShopPage = new DemoWebShopPage();
 
     @Test
     @Owner("d.rudovich")
@@ -32,11 +36,18 @@ public class DemoWebShopTests extends TestBase {
     void loginWithValidCredentials() {
         String cookie = getAuthCookie(DEFAULT_USER);
 
-        open("/");
-        setAuthCookie(cookie);
-
-        $("#topcartlink").click();
-        $(".page-title").shouldHave(text("Shopping cart"));
+        step("Open DemoWebShop Main Page ", () -> {
+            demoWebShopPage.openPage();
+        });
+        step("Set Auth Cookie for DEFAULT_USER", () -> {
+            demoWebShopPage.setAuthCookie(cookie);
+        });
+        step("Click on Shopping Cart button", () -> {
+            demoWebShopPage.clickOnShoppingCartButton();
+        });
+        step("Assert that Page had text is 'Shopping cart'", () -> {
+            demoWebShopPage.assertShoppingCartText();
+        });
     }
 
     @ParameterizedTest(name = "Login with email={0}, password={1}")
@@ -53,18 +64,25 @@ public class DemoWebShopTests extends TestBase {
     })
     void loginWithInvalidCredentials(String email, String password) {
 
-        UserGenerator user = UserGenerator.builder().email(email).password(password).build();
+        UserGenerator user = UserGenerator.builder()
+                .email(email)
+                .password(password)
+                .build();
 
-        String response = given()
-                .spec(request)
-                .body(user)
-                .post("/login")
-                .then()
-                .spec(response200)
-                .extract()
-                .asString();
+        step("Send login request with email=" + email + " and password=" + password, () -> {
+            String response = given()
+                    .spec(request)
+                    .body(user)
+                    .post("/login")
+                    .then()
+                    .spec(response200)
+                    .extract()
+                    .asString();
 
-        assertThat(response, containsString("Login was unsuccessful"));
+            step("Assert that response contains 'Login was unsuccessful'", () -> {
+                assertThat(response, containsString("Login was unsuccessful"));
+            });
+        });
     }
 
     @Test
@@ -79,7 +97,8 @@ public class DemoWebShopTests extends TestBase {
         String body = "addtocart_40.EnteredQuantity=1";
 
 
-        step("LogIn by DEFAULT_USER and add the Product (API)", () -> {
+        step("LogIn with DEFAULT_USER and add Product (API)", () -> {
+
             given()
                     .spec(request)
                     .contentType("application/x-www-form-urlencoded; charset=UTF-8")
@@ -91,18 +110,19 @@ public class DemoWebShopTests extends TestBase {
                     .spec(response200)
                     .body("success", is(true));
 
-            open("/");
-            setAuthCookie(cookie);
+            demoWebShopPage.openPage();
+            demoWebShopPage.setAuthCookie(cookie);
         });
 
-        step("Checking Quantity after adding Product to Cart", () -> {
-            $("#topcartlink").click();
-            $(".cart-qty").shouldHave(text("(1)"));
+        step("Open Shopping Cart and check Product Quantity = 1", () -> {
+            demoWebShopPage.clickOnShoppingCartButton();
+            demoWebShopPage.assertQuantityOnTheShoppingCartPage("1");
+
         });
 
-        step("Checking Quantity after removing Product", () -> {
-            $(".qty input").setValue("0").pressEnter();
-            $(".page-body").shouldHave(text("Your Shopping Cart is empty!"));
+        step("Set product quantity to 0 and check empty cart", () -> {
+            demoWebShopPage.setProductQuantityOnTheShoppingCartPage("0");
+            demoWebShopPage.assertTitleAfterRemovingOnTheShoppingCartPage();
         });
     }
 
@@ -111,14 +131,13 @@ public class DemoWebShopTests extends TestBase {
     @Feature("Shopping Cart")
     @Story("Add product and check price")
     @Tags({@Tag("ui"), @Tag("cart")})
-    @DisplayName("Checking Product price after adding to Cart")
+    @DisplayName("Checking Product Price after adding to Cart")
     void addProductAndCheckPriceInTheCart() {
 
         String cookie = getAuthCookie(DEFAULT_USER);
         String body = "addtocart_40.EnteredQuantity=1";
 
-
-        step("LogIn by DEFAULT_USER and add the Product (API)", () -> {
+        step("LogIn with DEFAULT_USER and add Product (API)", () -> {
             given()
                     .spec(request)
                     .contentType("application/x-www-form-urlencoded; charset=UTF-8")
@@ -130,18 +149,18 @@ public class DemoWebShopTests extends TestBase {
                     .spec(response200)
                     .body("success", is(true));
 
-            open("/");
-            setAuthCookie(cookie);
+            demoWebShopPage.openPage();
+            demoWebShopPage.setAuthCookie(cookie);
         });
 
-        step("Checking Product Quantity after adding Product to Cart", () -> {
-            $("#topcartlink").click();
-            $(".product-subtotal").shouldHave(text("1.00"));
+        step("Open Shopping Cart and check Product Price = 1.00", () -> {
+            demoWebShopPage.clickOnShoppingCartButton();
+            demoWebShopPage.assertProductPriceAfterAddingOnTheShoppingCartPage("1.00");
         });
 
-        step("Checking Product Quantity after removing Product", () -> {
-            $(".qty input").setValue("0").pressEnter();
-            $(".page-body").shouldHave(text("Your Shopping Cart is empty!"));
+        step("Set product quantity to 0 and check empty cart", () -> {
+            demoWebShopPage.setProductQuantityOnTheShoppingCartPage("0");
+            demoWebShopPage.assertTitleAfterRemovingOnTheShoppingCartPage();
         });
     }
 }
